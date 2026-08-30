@@ -1,0 +1,42 @@
+enum HttpMethod {
+  GET
+  POST
+}
+
+model Monitor {
+  isRunning     Boolean    @default(false) @map("is_running")
+  lastCheckedAt DateTime?  @map("last_checked_at")
+  nextCheckAt   DateTime   @map("next_check_at")
+  method        HttpMethod @default(GET)
+
+  // Essentials 
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // App Relationships
+  apiEndpointId    String           @unique @map("api_endpoint_id")
+  apiEndpoint      ApiEndpoint      @relation(fields: [apiEndpointId], references: [id], onDelete: Cascade)
+  monitorHistories MonitorHistory[]
+
+  @@map("monitors")
+}
+
+model MonitorHistory {
+  success          Boolean
+  statusCode       Int?     @map("status_code")
+  responseTimeInMs Int      @map("response_time_in_ms")
+  checkedAt        DateTime @map("checked_at")
+  errorMessage     String?  @map("error_message")
+
+  // Essentials
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // App Relationships
+  monitorId String?
+  monitor   Monitor? @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@map("monitor_histories")
+}

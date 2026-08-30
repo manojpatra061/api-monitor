@@ -1,0 +1,17 @@
+model ApiEndpoint {
+  endpoint      String
+  intervalInSec Int    @map("interval_in_sec")
+
+  // Essentials
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // App Relationships
+  userId  String   @map("user_id")
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  monitor Monitor?
+
+  @@unique([userId, endpoint])
+  @@map("api_endpoints")
+}

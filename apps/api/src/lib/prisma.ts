@@ -1,0 +1,22 @@
+// ----------
+// Prisma client instance.
+// Don't import types from here directly. Import from "db.types.ts" instead.
+// ----------
+
+import "dotenv/config";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaClient } from "../generated/prisma-client/client.js";
+export type {
+  Monitor,
+  MonitorHistory,
+  User,
+  ApiEndpoint,
+} from "../generated/prisma-client/client.js";
+
+const connectionString = `${process.env.TURSO_DATABASE_URL}`;
+
+const adapter = new PrismaLibSql({
+  url: connectionString,
+});
+
+export const prisma = new PrismaClient({ adapter });

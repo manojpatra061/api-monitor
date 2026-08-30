@@ -1,0 +1,18 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    // File Layout
+    // "rootDir": "./src",
+    "rootDirs": ["./src"],
+    "outDir": "./dist",
+
+    // Environment Settings
+    "types": ["node"],
+
+    // Custom Options
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

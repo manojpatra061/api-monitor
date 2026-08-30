@@ -1,5 +1,5 @@
 {
-  "name": "api-monitor",
+  "name": "api-monitor-monorepo",
   "private": true,
   "scripts": {
     "build": "turbo run build",
