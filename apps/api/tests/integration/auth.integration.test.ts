@@ -39,10 +39,7 @@ describe("Auth check", () => {
   const authCheck = t.procedure
     .use(authMiddleware)
     .query(({ ctx: { userSession } }) => {
-      if (!userSession) {
-        return false;
-      }
-      return true;
+      return userSession;
     });
 
   const testRouter = t.router({ authCheck });
@@ -51,9 +48,9 @@ describe("Auth check", () => {
   test("should allow authenticated users", async () => {
     vi.mocked(auth.api.getSession).mockResolvedValue(userSession);
     const caller = createCaller({});
-    expect(await caller.authCheck()).toBe(true);
+    await expect(caller.authCheck()).resolves.toBe(userSession);
   });
-  test.only("should reject unauthenticated users", async () => {
+  test("should reject unauthenticated users", async () => {
     vi.mocked(auth.api.getSession).mockResolvedValue(null);
     const caller = createCaller({});
     await expect(caller.authCheck()).rejects.toThrow(TRPCError);

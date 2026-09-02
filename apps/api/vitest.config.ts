@@ -5,7 +5,7 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   test: {
-    reporters: ["verbose"],
+    reporters: ["tap-flat"],
     setupFiles: ["tests/setup.ts"],
   },
 });
