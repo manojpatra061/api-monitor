@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { publicProcedure } from "../../init.js";
-import { authMiddleware } from "../../middlewares/middleware.js";
+import { authMiddleware } from "../../middlewares/index.js";
 import type { AnyProcedure } from "@trpc/server";
 
 export const testProcedures: Record<string, AnyProcedure> = {};

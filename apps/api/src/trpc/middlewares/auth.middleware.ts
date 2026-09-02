@@ -1,7 +1,3 @@
-// --------------------
-// A place for reusable tRPC middlewares.
-// --------------------
-
 import { createMiddleware, TRPCError } from "../init.js";
 import { auth } from "@/lib/auth.js";
 

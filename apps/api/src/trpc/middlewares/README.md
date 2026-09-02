@@ -6,6 +6,7 @@
   ```ts
   export const newMiddleware = createMiddleware(async (opts) => {
     // middleware implementations...
+
     return opts.next({
       ctx: {
         // extending context

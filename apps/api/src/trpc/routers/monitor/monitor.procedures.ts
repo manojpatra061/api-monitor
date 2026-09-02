@@ -1,7 +1,7 @@
 import { publicProcedure } from "../../init.js";
 import * as monitorController from "@/controllers/monitor.controller.js";
 import type { AnyProcedure } from "../../init.js";
-import { authMiddleware } from "../../middlewares/middleware.js";
+import { authMiddleware } from "../../middlewares/index.js";
 
 export const monitorProcedures: Record<string, AnyProcedure> = {};
 

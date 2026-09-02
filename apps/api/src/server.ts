@@ -11,6 +11,9 @@ app.use(express.json());
 
 export const startServer = () => {
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(
+      `Server is running at http://localhost:${PORT}
+API endpoints are live at http://localhost:${PORT}/api`,
+    );
   });
 };

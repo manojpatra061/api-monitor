@@ -3,7 +3,7 @@
 // Don't import types from here directly. Import from "db.types.ts" instead.
 // ----------
 
-import "dotenv/config";
+// import "dotenv/config"; not needed - already there in index
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { PrismaClient } from "../generated/prisma-client/client.js";
 export type {
