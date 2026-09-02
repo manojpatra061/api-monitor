@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from "vitest";
-import { t, TRPCError } from "../../src/trpc/init.js";
+import { t } from "../../src/trpc/init.js";
+import { TRPCError } from "@trpc/server";
 import { authMiddleware } from "../../src/trpc/middlewares/index.js";
 import { auth } from "@/lib/auth.js";
 
@@ -56,3 +57,5 @@ describe("Auth check", () => {
     await expect(caller.authCheck()).rejects.toThrow(TRPCError);
   });
 });
+
+// todo: should be db integrated instead of mocking. separate db + entries + checking

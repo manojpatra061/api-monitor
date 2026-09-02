@@ -1,4 +1,5 @@
-import { createMiddleware, TRPCError } from "../init.js";
+import { createMiddleware } from "../init.js";
+import { TRPCError } from "@trpc/server";
 import { auth } from "@/lib/auth.js";
 
 /**
