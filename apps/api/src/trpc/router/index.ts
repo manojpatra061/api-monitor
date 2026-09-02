@@ -8,6 +8,8 @@ export const trpcAppRouter = mergeRouters([
 
 export type TrpcAppRouter = typeof trpcAppRouter;
 
+// -------- Helpers ------------
+
 type Router = { routeSegment: string; router: ReturnType<typeof t.router> };
 type RouterCollection<T extends readonly Router[]> = {
   [R in T[number] as R["routeSegment"]]: R["router"];

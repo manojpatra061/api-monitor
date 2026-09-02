@@ -1,9 +1,9 @@
 # Router creation guide
 
-- `init.ts` exports methods (like `router`, `publicProcedure`) for creating routers.
+- `init.ts` exports methods (like `createRouter`, `publicProcedure`) for creating routers.
 - After you've created a router, _**register the router**_ by passing it in `mergeRouters` in `router.ts`. Skipping this step won't make your router available.
   ```js
-  // router.ts
+  // router/index.ts
   import { abcRouter } from "./abc/abc.router.js";
   export const rootRouter = mergeRouters({
     // Register your trpc router here to make it available
