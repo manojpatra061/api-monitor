@@ -1,4 +1,4 @@
-import { addApiEndpointForUser } from "./src/data/db/apiendpoint.db.js";
+import { addApiEndpointForUser } from "./src/data/models/apiendpoint.model.js";
 
 async function invoke() {
   const r = await addApiEndpointForUser("123ABC", {

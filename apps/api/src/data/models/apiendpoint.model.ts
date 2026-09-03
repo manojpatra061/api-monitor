@@ -1,5 +1,4 @@
-import { prisma } from "@/lib/prisma.js";
-import type { ApiEndpoint } from "./db.types.js";
+import { prisma, type ApiEndpoint } from "@/lib/prisma.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 dayjs.extend(utc);
@@ -11,7 +10,7 @@ type ApiEndpointBase = Pick<
 >;
 
 /**
- * _Note: Adding an API endpoint also adds a monitor with calculated values._
+ * Note: Adding an API endpoint also adds a monitor with calculated values._
  *
  * @param userId
  * @param data apiendpoint, interval (sec)

@@ -1,4 +1,4 @@
-import * as endPointService from "@/services/endpoint.service.js";
+import { endpointService } from "../services/index.js";
 import { z } from "zod";
 import { ValidationError } from "@/errors/index.js";
 
@@ -16,7 +16,7 @@ export async function addMonitor(monitorData: {
   try {
     const validatedData = MonitorSchema.parse(monitorData);
     const addedApiEndpoint =
-      await endPointService.addApiEndpointForUser(validatedData);
+      await endpointService.addApiEndpointForUser(validatedData);
     return addedApiEndpoint;
   } catch (error) {
     if (error instanceof z.ZodError) {

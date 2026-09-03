@@ -1,5 +1,5 @@
 import type { ApiHitResult } from "./monitor.types.js";
-import * as apiEndpointDb from "@/data/db/apiendpoint.db.js";
+import { apiEndpointModel } from "../data/models/index.js";
 
 export const addApiEndpointForUser = async ({
   userId,
@@ -10,7 +10,7 @@ export const addApiEndpointForUser = async ({
   apiEndpoint: string;
   intervalInSec: number;
 }) => {
-  const addedEndpointWithMonitor = await apiEndpointDb.addApiEndpointForUser(
+  const addedEndpointWithMonitor = await apiEndpointModel.addApiEndpointForUser(
     userId,
     {
       endpoint: apiEndpoint,

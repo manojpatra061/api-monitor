@@ -1,5 +1,5 @@
 import { expect, test, vi, describe } from "vitest";
-import { addApiEndpointForUser } from "./apiendpoint.db.js";
+import { addApiEndpointForUser } from "./apiendpoint.model.js";
 import { prisma } from "@/lib/prisma.js";
 
 vi.mock(import("@/lib/prisma.js"), async (importOriginal) => {

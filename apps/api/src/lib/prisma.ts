@@ -1,6 +1,5 @@
 // ----------
 // Prisma client instance.
-// Don't import types from here directly. Import from "db.types.ts" instead.
 // ----------
 
 // import "dotenv/config"; not needed - already there in index
