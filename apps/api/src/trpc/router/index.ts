@@ -1,9 +1,11 @@
 import { t } from "../init.js";
 import { testRouter } from "./test/test.router.js";
+import { monitorRouter } from "./monitor/monitor.router.js";
 
 // Register your trpc router here to make it available
 export const trpcAppRouter = mergeRouters([
   { routeSegment: "test", router: testRouter },
+  { routeSegment: "monitor", router: monitorRouter },
 ]);
 
 export type TrpcAppRouter = typeof trpcAppRouter;

@@ -3,9 +3,7 @@ import * as monitorController from "@/controllers/monitor.controller.js";
 import type { AnyProcedure } from "@trpc/server";
 import { authMiddleware } from "../../middlewares/index.js";
 
-export const monitorProcedures: Record<string, AnyProcedure> = {};
-
-monitorProcedures.addMonitor = publicProcedure
+const addMonitor = publicProcedure
   .use(authMiddleware)
   .input(monitorController.MonitorSchema)
   .mutation(async ({ input, ctx }) => {
@@ -22,3 +20,8 @@ monitorProcedures.addMonitor = publicProcedure
     });
     return addedMonitorDetails;
   });
+
+export const monitorProcedures = { addMonitor } satisfies Record<
+  string,
+  AnyProcedure
+>;

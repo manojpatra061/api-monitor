@@ -19,4 +19,4 @@ async function execute(x: Promise<any>) {
   console.log(result);
 }
 
-execute(client.test.testGet.query());
+// execute(client.test.hi.query());

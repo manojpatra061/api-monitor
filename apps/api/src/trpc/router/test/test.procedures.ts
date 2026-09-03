@@ -2,22 +2,26 @@ import * as z from "zod";
 import { publicProcedure } from "../../init.js";
 import type { AnyProcedure } from "@trpc/server";
 
-const testGet = publicProcedure.query(() => {
-  return { message: "working..." };
+const hi = publicProcedure.query(() => {
+  return { message: "Hello!", type: "query" };
 });
 
-const testGetWithArg = publicProcedure.input(z.string()).query((arg) => {
-  return { message: `testGetWithArg working...`, arg: arg.input };
+const myNameIs = publicProcedure.input(z.string()).query((arg) => {
+  return { message: `Nice to meet you ${arg.input}!`, type: "query" };
 });
 
-const testPost = publicProcedure
-  .input(z.object({ arg: z.string() }))
+const updateMyDetails = publicProcedure
+  .input(z.object({ name: z.string(), age: z.number() }))
   .mutation((opts) => {
-    return { message: `testPost working... ${opts.input.arg}` };
+    return {
+      message: "Your details have been updated",
+      updatedDetails: opts.input,
+      type: "mutation",
+    };
   });
 
 export const testProcedures = {
-  testGet,
-  testGetWithArg,
-  testPost,
+  hi,
+  myNameIs,
+  updateMyDetails,
 } satisfies Record<string, AnyProcedure>;
