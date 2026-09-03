@@ -6,13 +6,15 @@ import { authRouter } from "./auth.router.js";
 
 export const apiRouter: Router = express.Router();
 
+apiRouter.all("/", rootHandler);
 apiRouter.use("/ok", okRouter);
 apiRouter.use("/trpc", trpcRouter);
 apiRouter.use("/auth/{*any}", authRouter);
-apiRouter.use("/", (req: Request, res: Response) => {
+
+function rootHandler(req: Request, res: Response) {
   res.json({
     message: "This is the root API endpoint.",
     method: req.method,
     url: req.originalUrl,
   });
-});
+}

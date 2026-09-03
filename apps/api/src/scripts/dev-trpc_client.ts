@@ -6,15 +6,17 @@
 import "dotenv/config";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import type { TrpcAppRouter } from "../index.js";
+import { startServer } from "../server.js";
 
-async function run() {
-  const url = `${process.env.API_URL}/api/trpc`;
-  const client = createTRPCClient<TrpcAppRouter>({
-    links: [httpBatchLink({ url })],
-  });
+startServer(); // todo: rely on package.json script to start server. consideration: child_process 
+const url = `${process.env.API_URL}/api/trpc`;
+const client = createTRPCClient<TrpcAppRouter>({
+  links: [httpBatchLink({ url })],
+});
 
-  const result = await client.test.testGet.query();
+async function execute(x: Promise<any>) {
+  const result = await x;
   console.log(result);
 }
 
-run();
+execute(client.test.testGet.query());
