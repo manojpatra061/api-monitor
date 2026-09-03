@@ -8,7 +8,7 @@ import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import type { TrpcAppRouter } from "../index.js";
 import { startServer } from "../server.js";
 
-startServer(); // todo: rely on package.json script to start server. consideration: child_process 
+startServer(); // todo: rely on package.json script to start server. consideration: child_process
 const url = `${process.env.API_URL}/api/trpc`;
 const client = createTRPCClient<TrpcAppRouter>({
   links: [httpBatchLink({ url })],
