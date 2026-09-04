@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx --watch src/index",
+    "dev:script": "tsx --watch src/scripts/dev-script",
     "test": "vitest --config vitest.config.ts"
   },
   "keywords": [],

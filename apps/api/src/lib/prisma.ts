@@ -12,7 +12,7 @@ export type {
   ApiEndpoint,
 } from "../generated/prisma-client/client.js";
 
-const connectionString = `${process.env.TURSO_DATABASE_URL}`;
+const connectionString = `${process.env.DATABASE_URL}`;
 
 const adapter = new PrismaLibSql({
   url: connectionString,

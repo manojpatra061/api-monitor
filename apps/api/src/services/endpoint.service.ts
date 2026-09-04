@@ -1,7 +1,6 @@
-import type { ApiHitResult } from "./monitor.types.js";
 import { apiEndpointModel } from "../data/models/index.js";
 
-export const addApiEndpointForUser = async ({
+export async function addApiEndpointForUser({
   userId,
   apiEndpoint,
   intervalInSec,
@@ -9,7 +8,7 @@ export const addApiEndpointForUser = async ({
   userId: string;
   apiEndpoint: string;
   intervalInSec: number;
-}) => {
+}) {
   const addedEndpointWithMonitor = await apiEndpointModel.addApiEndpointForUser(
     userId,
     {
@@ -18,34 +17,32 @@ export const addApiEndpointForUser = async ({
     },
   );
   return addedEndpointWithMonitor;
-};
+}
 
-// will check them later
-const hitApi = async (
-  apiEndPoint: string,
-  method: "GET" | "POST" = "GET",
-): Promise<ApiHitResult> => {
-  let response: Response;
-  const timeBeforeRes = new Date();
-  try {
-    response = await fetch(apiEndPoint, { method });
-  } catch {
-    throw new NetworkError("Network error while calling the API"); // NO NEED
-  }
+async function monitorApi(apiEndPoint: string, method: "GET" | "POST" = "GET") {
+  const start = new Date();
+  const res = await hitApi(apiEndPoint, method);
+  const end = new Date();
   return {
-    responseTimeInMs: new Date().getTime() - timeBeforeRes.getTime(),
-    success: response.ok,
-    statusCode: response.status,
+    responseTimeInMs: end.getTime() - start.getTime(),
+    success: res.ok,
+    statusCode: res.status,
     checkedAt: new Date().toISOString(),
-    errorMessage: response.ok ? null : `Response error: ${response.statusText}`,
+    errorMessage: res.ok ? null : `Response error: ${res.statusText}`,
   };
-};
+}
 
-export const monitorApi = async (
-  apiEndPoint: string,
-  method: "GET" | "POST" = "GET",
-) => {
-  const result = await hitApi(apiEndPoint, method);
-  //
-  return;
-};
+async function hitApi(apiEndPoint: string, method: "GET" | "POST" = "GET") {
+  try {
+    return await fetch(apiEndPoint, { method });
+  } catch (error) {
+    // todo: Create a separate error class. Suggestions: NetworkError, ApiError, HitError, etc.
+    throw new Error(
+      `Not able to hit the API endpoint "${apiEndPoint}" with "${method}" method.
+${(error as Error).message}`,
+    );
+  }
+}
+
+// monitor
+// apiendpoint -> lookup monitor table -> 

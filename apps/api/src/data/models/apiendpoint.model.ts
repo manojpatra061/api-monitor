@@ -1,4 +1,5 @@
-import { prisma, type ApiEndpoint } from "@/lib/prisma.js";
+import { prisma } from "@/lib/prisma.js";
+import type { ApiEndpoint, Monitor } from "@/lib/prisma.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 dayjs.extend(utc);
@@ -10,18 +11,19 @@ type ApiEndpointBase = Pick<
 >;
 
 /**
- * Note: Adding an API endpoint also adds a monitor with calculated values._
+ * Note: Adding an API endpoint also adds a monitor with calculated values.
  *
  * @param userId
  * @param data apiendpoint, interval (sec)
  * @returns API endpoint record with monitor record added.
+ * @throws DatabaseError
  */
 export async function addApiEndpointForUser(
   userId: ApiEndpointBase["userId"],
   endpointData: Omit<ApiEndpointBase, "userId">,
-) {
+): Promise<{ apiEndpoint: ApiEndpoint; monitor?: Monitor }> {
   try {
-    const result = await prisma.apiEndpoint.create({
+    const { monitor, ...apiEndpoint } = await prisma.apiEndpoint.create({
       data: {
         ...endpointData,
         monitor: { create: { nextCheckAt: dayjs().utc().format() } },
@@ -35,11 +37,15 @@ export async function addApiEndpointForUser(
         monitor: true,
       },
     });
-    return result;
-  } catch {
-    throw new DatabaseError(
-      `Unable to add API endpoint for the user. 
-        It could be due to if the user is trying to add the same API endpoint that is already present.`,
-    );
+    if (!monitor) {
+      return { apiEndpoint };
+    }
+    return { apiEndpoint, monitor };
+  } catch (error) {
+    throw new DatabaseError({
+      message: "Unable to add API endpoint for the user.",
+      metadata: { query: "prisma.apiEndpoint.create" },
+      opts: { cause: error },
+    });
   }
 }
