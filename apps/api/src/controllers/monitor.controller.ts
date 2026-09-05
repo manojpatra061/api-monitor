@@ -20,7 +20,10 @@ export async function addMonitor(monitorData: {
     return addedApiEndpoint;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new ValidationError(z.prettifyError(error));
+      throw new ValidationError({
+        message: "Invalid entries",
+        metadata: { zodError: z.prettifyError(error) },
+      });
     }
   }
 }

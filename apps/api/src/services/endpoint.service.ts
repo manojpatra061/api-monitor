@@ -44,5 +44,6 @@ ${(error as Error).message}`,
   }
 }
 
-// monitor
-// apiendpoint -> lookup monitor table -> 
+// fend -> monitor (api endpoint + interval)
+//
+// apiendpoint -> lookup monitor table ->

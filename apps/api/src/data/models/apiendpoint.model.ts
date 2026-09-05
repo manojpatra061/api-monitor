@@ -5,6 +5,8 @@ import utc from "dayjs/plugin/utc.js";
 dayjs.extend(utc);
 import { DatabaseError } from "@/errors/index.js";
 
+export type { ApiEndpoint } from "@/lib/prisma.js";
+
 type ApiEndpointBase = Pick<
   ApiEndpoint,
   "endpoint" | "intervalInSec" | "userId"

@@ -1,6 +1,8 @@
 import { DatabaseError } from "@/errors/index.js";
 import { prisma, type User } from "@/lib/prisma.js";
 
+export type { User } from "@/lib/prisma.js";
+
 type UserBase = Pick<User, "name" | "email">;
 
 /**

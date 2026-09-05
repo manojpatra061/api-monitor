@@ -1,17 +1,23 @@
-import { publicProcedure } from "../../init.js";
-import * as monitorController from "@/controllers/monitor.controller.js";
+import { publicProcedure, t } from "../../init.js";
+import { monitorController } from "@/controllers/index.js";
 import type { AnyProcedure } from "@trpc/server";
-import { authMiddleware } from "../../middlewares/index.js";
+// import { authMiddleware } from "../../middlewares/index.js";
+
+const MonitorSchemaBase = monitorController.MonitorSchema.omit({
+  userId: true,
+});
+
+const authMiddlewareMocked = t.middleware(async (opts) => {
+  return opts.next({
+    ctx: { userSession: { user: { id: "cmtn6rlu40000kdxvmovolr0l" } } },
+  });
+});
 
 const addMonitor = publicProcedure
-  .use(authMiddleware)
-  .input(monitorController.MonitorSchema)
+  .use(authMiddlewareMocked)
+  .input(MonitorSchemaBase)
   .mutation(async ({ input, ctx }) => {
-    const {
-      userSession: {
-        user: { id: userId },
-      },
-    } = ctx;
+    const userId = ctx.userSession.user.id;
     const { apiEndpoint, intervalInSec } = input;
     const addedMonitorDetails = await monitorController.addMonitor({
       userId,
@@ -21,7 +27,7 @@ const addMonitor = publicProcedure
     return addedMonitorDetails;
   });
 
-export const monitorProcedures = { addMonitor } satisfies Record<
+export const monitorProcedures = { add: addMonitor } satisfies Record<
   string,
   AnyProcedure
 >;

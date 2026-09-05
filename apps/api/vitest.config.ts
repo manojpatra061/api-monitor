@@ -5,7 +5,7 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   test: {
-    reporters: ["tap-flat"],
+    reporters: ["default"],
     setupFiles: ["tests/setup.ts"],
   },
 });

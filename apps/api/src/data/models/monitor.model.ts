@@ -1,6 +1,8 @@
 import { DatabaseError, NotFoundError } from "@/errors/index.js";
 import { prisma, type Monitor } from "@/lib/prisma.js";
 
+export type { Monitor } from "@/lib/prisma.js";
+
 /**
  *
  * @param apiEndpointId
