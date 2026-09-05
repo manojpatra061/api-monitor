@@ -8,8 +8,3 @@ import type { Context } from "./contexts/context.js";
 
 // tRPC instance
 export const t = initTRPC.context<Context>().create();
-export const {
-  router: createRouter,
-  procedure: publicProcedure,
-  middleware: createMiddleware,
-} = t;

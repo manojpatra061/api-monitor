@@ -15,22 +15,25 @@ async function getTrpcClient() {
     console.log("Unable to load API_URL");
     return;
   }
+
   const url = `${process.env.API_URL}/api/trpc`;
   const trpcClient = createTRPCClient<TrpcAppRouter>({
     links: [httpBatchLink({ url })],
   });
+
   return trpcClient;
 }
 
 async function runProcedures() {
-  startServer(); // todo: rely on package.json's dev script
   try {
     const client = await getTrpcClient();
+
     const result = await client?.monitor.add.mutate({
-      apiEndpoint: "https://dummyjson.com/ip",
+      apiEndpoint: "https://dummyjson.com/test",
       intervalInSec: 3,
     });
     // const result = await client?.test.hi.query();
+
     console.log(result);
   } catch (error) {
     if (error instanceof TRPCClientError) {
@@ -39,4 +42,5 @@ async function runProcedures() {
   }
 }
 
+startServer(); // todo: rely on package.json's dev script
 runProcedures();

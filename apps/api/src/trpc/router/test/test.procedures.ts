@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { publicProcedure } from "../../init.js";
+import { publicProcedure } from "../../init-core.js";
 import type { AnyProcedure } from "@trpc/server";
 
 const hi = publicProcedure.query(() => {

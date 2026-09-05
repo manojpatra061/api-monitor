@@ -1,4 +1,4 @@
-import { createRouter } from "../../init.js";
+import { createRouter } from "../../init-core.js";
 import { testProcedures } from "./test.procedures.js";
 
 export const testRouter = createRouter({

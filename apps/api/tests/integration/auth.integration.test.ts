@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
 import { t } from "../../src/trpc/init.js";
 import { TRPCError } from "@trpc/server";
-import { authMiddleware } from "../../src/trpc/middlewares/index.js";
+import { authCheck } from "../../src/trpc/middlewares/index.js";
 import { auth } from "@/lib/auth.js";
 
 vi.mock(import("@/lib/auth.js"), async (importOriginal) => {
@@ -37,25 +37,23 @@ describe("Auth check", () => {
       updatedAt: new Date(),
     },
   };
-  const authCheck = t.procedure
-    .use(authMiddleware)
-    .query(({ ctx: { userSession } }) => {
-      return userSession;
-    });
+  const check = t.procedure.use(authCheck).query(({ ctx: { userSession } }) => {
+    return userSession;
+  });
 
-  const testRouter = t.router({ authCheck });
-  const createCaller = t.createCallerFactory(testRouter);
+  const tempRouter = t.router({ auth: { check } });
+  const createCaller = t.createCallerFactory(tempRouter);
 
   test("should allow authenticated users", async () => {
     vi.mocked(auth.api.getSession).mockResolvedValue(userSession);
     const caller = createCaller({});
-    await expect(caller.authCheck()).resolves.toBe(userSession);
+    await expect(caller.auth.check()).resolves.toBe(userSession);
   });
   test("should reject unauthenticated users", async () => {
     vi.mocked(auth.api.getSession).mockResolvedValue(null);
     const caller = createCaller({});
-    await expect(caller.authCheck()).rejects.toThrow(TRPCError);
+    await expect(caller.auth.check()).rejects.toThrow(TRPCError);
   });
 });
 
-// todo: should be db integrated instead of mocking. separate db + entries + checking
+// TODO: Should be db integrated instead of mocking. Considerations: separate db + entries + checking

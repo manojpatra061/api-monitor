@@ -1,6 +1,6 @@
-import { createMiddleware } from "../init.js";
+import { t } from "../init.js";
 import { TRPCError } from "@trpc/server";
-import { auth } from "@/lib/auth.js";
+import { auth, type Session } from "@/lib/auth.js";
 
 /**
  * Adds currently active session data in the context (`opts.ctx.userSession`).
@@ -9,8 +9,8 @@ import { auth } from "@/lib/auth.js";
  *
  * @throws `TRPCError` if session expired or no valid session cookie found.
  */
-export const authMiddleware = createMiddleware(async (opts) => {
-  const session = await auth.api.getSession();
+export const authCheck = t.middleware(async (opts) => {
+  const session: Session = await auth.api.getSession();
   if (!session) {
     throw new TRPCError({
       code: "UNAUTHORIZED",

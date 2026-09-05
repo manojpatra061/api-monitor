@@ -1,20 +1,12 @@
-import { publicProcedure, t } from "../../init.js";
+import { protectedProcedure } from "../../init-core.js";
 import { monitorController } from "@/controllers/index.js";
 import type { AnyProcedure } from "@trpc/server";
-// import { authMiddleware } from "../../middlewares/index.js";
 
 const MonitorSchemaBase = monitorController.MonitorSchema.omit({
   userId: true,
 });
 
-const authMiddlewareMocked = t.middleware(async (opts) => {
-  return opts.next({
-    ctx: { userSession: { user: { id: "cmtn6rlu40000kdxvmovolr0l" } } },
-  });
-});
-
-const addMonitor = publicProcedure
-  .use(authMiddlewareMocked)
+const addMonitor = protectedProcedure
   .input(MonitorSchemaBase)
   .mutation(async ({ input, ctx }) => {
     const userId = ctx.userSession.user.id;
