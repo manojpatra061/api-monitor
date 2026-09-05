@@ -3,7 +3,7 @@
 // -------------
 
 import "dotenv/config";
-import { monitorModel, apiEndpointModel, userModel } from "../index.js";
+import { monitorModel, apiEndpointModel, userModel } from "../models/index.js";
 
 async function runModel() {
   // const newUser = await userModel.createUser({
