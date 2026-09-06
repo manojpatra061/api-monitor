@@ -35,7 +35,7 @@ model MonitorResult {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // App Relationships
-  monitorId String?
+  monitorId String
   monitor   Monitor? @relation(fields: [monitorId], references: [id], onDelete: Cascade)
 
   @@map("monitor_results")
