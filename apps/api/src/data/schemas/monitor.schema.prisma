@@ -17,16 +17,16 @@ model Monitor {
   // App Relationships
   apiEndpointId    String           @unique @map("api_endpoint_id")
   apiEndpoint      ApiEndpoint      @relation(fields: [apiEndpointId], references: [id], onDelete: Cascade)
-  monitorHistories MonitorHistory[]
+  monitorHistories MonitorResult[]
 
   @@map("monitors")
 }
 
-model MonitorHistory {
+model MonitorResult {
   success          Boolean
   statusCode       Int?     @map("status_code")
   responseTimeInMs Int      @map("response_time_in_ms")
-  checkedAt        DateTime @map("checked_at")
+  checkedAt        DateTime @default(now()) @map("checked_at")
   errorMessage     String?  @map("error_message")
 
   // Essentials
@@ -38,5 +38,5 @@ model MonitorHistory {
   monitorId String?
   monitor   Monitor? @relation(fields: [monitorId], references: [id], onDelete: Cascade)
 
-  @@map("monitor_histories")
+  @@map("monitor_results")
 }
