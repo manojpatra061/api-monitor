@@ -1,3 +1,10 @@
+// -------------------------
+// Exports convenient methods for working with tRPC instance directly,
+// without relying on its low-level implementation.
+//
+// Useful for creating routers, middlewares, procedures, etc.
+// -------------------------
+
 import { t } from "./init.js";
 import { authCheck } from "./middlewares/index.js";
 import { bypassAuthCheck } from "./middlewares/auth-bypass.middleware.js";

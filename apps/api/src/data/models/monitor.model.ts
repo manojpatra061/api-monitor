@@ -7,7 +7,7 @@ export type { Monitor } from "@/lib/prisma.js";
  *
  * @param apiEndpointId
  * @returns monitor
- * @throws NotFoundError, DatabaseError
+ * @throws DatabaseError
  */
 export async function getMonitorWithApiEndpointId(
   apiEndpointId: string,
