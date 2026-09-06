@@ -7,7 +7,7 @@ import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { PrismaClient } from "../generated/prisma-client/client.js";
 export type {
   Monitor,
-  MonitorHistory,
+  MonitorResult,
   User,
   ApiEndpoint,
 } from "../generated/prisma-client/client.js";
