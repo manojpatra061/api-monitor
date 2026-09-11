@@ -5,16 +5,11 @@
 console.log(".script.ts file running...", "\n");
 
 import "dotenv/config";
-import { monitorModel, apiEndpointModel, userModel } from "../models/index.js";
+import * as models from "../models/index.js";
 
 async function runDbModel() {
-  // const newUser = await userModel.createUser({
-  //   name: "manoj patra",
-  //   email: "manojpatra@gmail.com",
-  // });
-  // console.log({ newUser });
-  const model = await monitorModel.getMonitorWithApiEndpointId("i dont know");
-  console.log({ model });
+  const result = await models.monitorModel.update("cmtoahjne00008fxvthf2vyzg", {isRunning: true});
+  console.log({ result });
 }
 
 runDbModel();

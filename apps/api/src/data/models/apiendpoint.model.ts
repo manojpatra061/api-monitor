@@ -7,7 +7,7 @@ import { DatabaseError } from "@/errors/index.js";
 
 export type { ApiEndpoint } from "@/lib/prisma.js";
 
-type ApiEndpointBase = Pick<
+export type ApiEndpointBase = Pick<
   ApiEndpoint,
   "endpoint" | "intervalInSec" | "userId"
 >;
@@ -23,7 +23,7 @@ type ApiEndpointBase = Pick<
 export async function addApiEndpointForUser(
   userId: ApiEndpointBase["userId"],
   endpointData: Omit<ApiEndpointBase, "userId">,
-): Promise<{ apiEndpoint: ApiEndpoint; monitor?: Monitor }> {
+): Promise<{ apiEndpoint: ApiEndpoint; monitor: Monitor | null }> {
   try {
     const { monitor, ...apiEndpoint } = await prisma.apiEndpoint.create({
       data: {
@@ -40,7 +40,7 @@ export async function addApiEndpointForUser(
       },
     });
     if (!monitor) {
-      return { apiEndpoint };
+      return { apiEndpoint, monitor: null };
     }
     return { apiEndpoint, monitor };
   } catch (error) {
