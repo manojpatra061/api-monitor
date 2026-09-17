@@ -8,7 +8,7 @@ console.log(".script.ts file running...", "\n");
 import "dotenv/config";
 import { createTRPCClient, httpBatchLink, TRPCClientError } from "@trpc/client";
 import type { TrpcAppRouter } from "../index.js";
-import { startServer } from "@/server.js";
+// import { startServer } from "@/server.js";
 
 async function getTrpcClient() {
   if (!process.env.API_URL) {
@@ -42,5 +42,5 @@ async function runProcedures() {
   }
 }
 
-startServer(); // todo: rely on package.json's dev script
+// startServer(); // todo: rely on package.json's dev script
 runProcedures();

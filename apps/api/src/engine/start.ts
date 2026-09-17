@@ -7,22 +7,26 @@ import { EngineError } from "./errors/index.js";
 
 dayjs.extend(localizedFormat);
 
-async function startEngine() {
-  // findout due monitor every second -> returns an array of monitors
+async function startEngine(sec: number) {
+  // every 5 second
   while (true) {
-    const dueMonitors = await findDueMonitor();
+    console.log(`---------- ${dayjs().format("L - LTS")} ----------`);
+    const dueMonitors = await findDueMonitors();
+    console.log({ dueMonitorsLength: dueMonitors.length });
+
     // process the monitor -> returns the result array + update nextCheck
-    console.log("---------------------------------");
     if (dueMonitors.length === 0) {
-      console.log(`No due monitors found! - ${dayjs().format("L - LTS")}`);
-      await delay(5000);
+      console.log(`No due monitors found!`);
+      await delay(sec);
       continue;
     }
     const monitorResults = await processMonitor(dueMonitors);
     // save the result
+    console.log({ monitorResults });
+
     const { savedResults } = await saveResult(monitorResults);
     console.log(`Saved: ${savedResults} records.`);
-    await delay(5000);
+    await delay(sec);
   }
 }
 
@@ -31,7 +35,7 @@ type DueMonitor = {
   intervalInSec: ApiEndpoint["intervalInSec"];
   url: ApiEndpoint["endpoint"];
 };
-async function findDueMonitor(): Promise<DueMonitor[]> {
+async function findDueMonitors(): Promise<DueMonitor[]> {
   const dueMonitors = await prisma.monitor.findMany({
     where: {
       AND: [{ isRunning: true }, { nextCheckAt: { lte: dayjs().toDate() } }],
@@ -57,20 +61,20 @@ type MonitorResult = Awaited<ReturnType<typeof monitorService.hitUrl>> & {
 async function processMonitor(
   dueMonitors: DueMonitor[],
 ): Promise<MonitorResult[]> {
-  let monitorResults: MonitorResult[] = [];
-  dueMonitors.forEach(async (dm) => {
-    let monitorResult = await monitorService.hitUrl(dm.url);
-    // update nextCheck
-    const t = await prisma.monitor.update({
-      where: { id: dm.monitorId },
-      data: {
-        nextCheckAt: dayjs().add(dm.intervalInSec, "seconds").toDate(),
-        lastCheckedAt: dayjs().toDate(),
-      },
-    });
-    monitorResults.push({ ...monitorResult, monitorId: dm.monitorId });
-  });
-  return monitorResults;
+  return Promise.all(
+    dueMonitors.map(async (dm) => {
+      let monitorResult = await monitorService.hitUrl(dm.url);
+      // update nextCheck
+      await prisma.monitor.update({
+        where: { id: dm.monitorId },
+        data: {
+          nextCheckAt: dayjs().add(dm.intervalInSec, "seconds").toDate(),
+          lastCheckedAt: dayjs().toDate(),
+        },
+      });
+      return { ...monitorResult, monitorId: dm.monitorId };
+    }),
+  );
 }
 
 async function saveResult(monitorResultArr: MonitorResult[]) {
@@ -86,4 +90,4 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-startEngine();
+startEngine(5000);

@@ -25,5 +25,6 @@ export async function addMonitor(monitorData: {
         metadata: { zodError: z.prettifyError(error) },
       });
     }
+    throw error;
   }
 }
