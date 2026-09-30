@@ -1,0 +1,20 @@
+@theme {
+  --color-brand-primary: #ebfef2;
+  --color-brand-primary-fg: #4c6a75;
+
+  --color-brand-secondary: #d0fbe1;
+  --color-brand-secondary-fg: #243f3a; /* 243f3a */
+
+  --color-brand-accent: #00a95d;
+  --color-brand-accent-fg: #d4fade;
+
+  --color-brand-extra-1: #000000;
+
+  --color-brand-text: #000000;
+
+  /* dark mode */
+  /* --color-brand-primary-dark: #1d1d35;
+  --color-brand-secondary-dark: #396172;
+  --color-brand-accent-dark: #0072ba;
+  --color-brand-text-dark: #ffffff; */
+}

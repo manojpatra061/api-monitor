@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { JetBrains_Mono } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Header } from "@/components/Header";
+import { AppSidebarProvider } from "@/components/Sidebar";
+import { Footer } from "@/components/Footer";
+import { Body } from "@/components/Body";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,10 +33,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+    <html lang="en" className={cn("font-mono", jetbrainsMono.variable)}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} bg-background`}
+      >
+        <AppSidebarProvider>
+          <App>{children}</App>
+        </AppSidebarProvider>
       </body>
     </html>
+  );
+}
+
+function App({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <div className={cn("flex flex-col", "mx-auto, text-brand-text")}>
+        <Header className="bg-brand-secondary" />
+        <Body
+          className={cn("max-w-[2000px] border-l border-r", "bg-brand-primary")}
+        >
+          <main>{children}</main>
+        </Body>
+        <Footer className="bg-brand-secondary w-screen" />
+      </div>
+    </>
   );
 }
