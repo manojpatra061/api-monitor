@@ -37,14 +37,16 @@ export function Navbar({ className }: Props) {
             return (
               <NavigationMenuItem key={href}>
                 <NavigationMenuLink
+                  render={<Link href={href} />}
                   className={cn(
                     "border-b-4 border-transparent",
                     "px-2 text-sm font-medium",
-                    "hover:bg-brand-accent-fg",
+                    "hover:bg-brand-secondary-fg hover:text-brand-secondary",
                     active && "border-brand-accent bg-brand-accent-fg",
                   )}
                 >
-                  <Link href={href}>{label}</Link>
+                  {label}
+                  {/* <Link href={href}>{label}</Link> */}
                 </NavigationMenuLink>
               </NavigationMenuItem>
             );

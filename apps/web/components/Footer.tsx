@@ -5,7 +5,12 @@ export function Footer({ className }: { className?: string }) {
   return (
     <>
       <footer className={cn("border-t", className)}>
-        <div className={cn(maxWidth, "w-full mx-auto px-5 md:px-10")}>
+        <div
+          className={cn(
+            maxWidth,
+            "w-full mx-auto px-5 py-2.5 md:px-10 min-h-10",
+          )}
+        >
           <p className="text-base font-thin italic text-center lg:text-right">
             Developed by <span className="underline">Manoj Patra</span>
           </p>

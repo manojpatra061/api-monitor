@@ -13,16 +13,15 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Menu, ListChecks } from "lucide-react";
+import { Menu, ListChecks, Home, Plus } from "lucide-react";
 import { Branding } from "./Branding";
 import { Profile } from "./Profile";
 import * as React from "react";
 import Link from "next/link";
-import { AddMonitorCta } from "./Cta";
 import { cn } from "@/lib/utils";
 
 const SIDEBAR_LINKS = [
-  // { href: "/", label: "Home", icon: ListChecks },
+  { href: "/", label: "Home", icon: Home },
   { href: "/monitors", label: "Monitors", icon: ListChecks },
 ] as const;
 
@@ -34,17 +33,19 @@ interface Props {
 export function AppSidebar({ className }: Pick<Props, "className">) {
   return (
     <Sidebar className={cn("", className)}>
-      <SidebarHeader>
+      {/* <SidebarHeader>
         <Branding />
-      </SidebarHeader>
-      <SidebarContent>
+      </SidebarHeader> */}
+      <SidebarContent className="py-5 bg-brand-secondary">
         <SidebarGroup>
           <SidebarMenu>
             {SIDEBAR_LINKS.map(({ label, icon: Icon, href }) => (
-              <SidebarMenuItem key={label}>
-                <SidebarMenuButton render={<Link href={href} />}>
-                  <Icon />
-                  <span>{label}</span>
+              <SidebarMenuItem key={label} className="text-brand-secondary-fg">
+                <SidebarMenuButton
+                  render={<Link href={href} className="flex flex-row gap-5" />}
+                >
+                  <Icon className="size-5!" />
+                  <span className="text-base uppercase">{label}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -52,17 +53,17 @@ export function AppSidebar({ className }: Pick<Props, "className">) {
         </SidebarGroup>
         <SidebarGroup>
           <SidebarMenu>
-            <AddMonitorCta />
+            <MonitorNowCta />
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="border-t p-1">
+      <SidebarFooter className="border-t p-1 bg-brand-primary text-brand-primary-fg">
         <Button
           variant="ghost"
           className="border-t flex gap-2 justify-start cursor-pointer"
         >
           <Profile userInitial="Mp" />
-          <span>Profile</span>
+          <span className="text-base uppercase">Profile</span>
         </Button>
       </SidebarFooter>
     </Sidebar>
@@ -88,6 +89,23 @@ export function AppSidebarProvider({ children }: Props) {
   return (
     <>
       <SidebarProvider>{children}</SidebarProvider>
+    </>
+  );
+}
+
+export function MonitorNowCta({ className }: { className?: string }) {
+  return (
+    <>
+      <Button
+        variant={"outline"}
+        className={cn(
+          "cursor-pointer bg-brand-accent text-brand-accent-fg hover:bg-brand-primary",
+          className,
+        )}
+      >
+        <span className="uppercase text-base font-semibold">Monitor now</span>
+        <Plus className="size-5" />
+      </Button>
     </>
   );
 }
