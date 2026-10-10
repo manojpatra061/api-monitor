@@ -42,7 +42,8 @@ export function Navbar({ className }: Props) {
                     "border-b-4 border-transparent",
                     "px-2 text-sm font-medium",
                     "hover:bg-brand-secondary-fg hover:text-brand-secondary",
-                    active && "border-brand-accent bg-brand-accent-fg",
+                    active &&
+                      "border-brand-accent bg-brand-accent-fg hover:text-brand-accent",
                   )}
                 >
                   {label}

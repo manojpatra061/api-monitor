@@ -62,7 +62,7 @@ export function AppSidebar({ className }: Pick<Props, "className">) {
           variant="ghost"
           className="border-t flex gap-2 justify-start cursor-pointer"
         >
-          <Profile userInitial="Mp" />
+          <Profile userInitial="MP" />
           <span className="text-base uppercase">Profile</span>
         </Button>
       </SidebarFooter>

@@ -3,10 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Header } from "@/components/Header";
-import { AppSidebarProvider } from "@/components/Sidebar";
-import { Footer } from "@/components/Footer";
-import { Body } from "@/components/Body";
+import { Providers } from "@/components/Providers";
+import { App } from "@/components/App";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -37,26 +35,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background`}
       >
-        <AppSidebarProvider>
+        <Providers>
           <App>{children}</App>
-        </AppSidebarProvider>
+        </Providers>
       </body>
     </html>
-  );
-}
-
-function App({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <div className={cn("flex flex-col", "mx-auto, text-brand-text")}>
-        <Header className="bg-brand-secondary" />
-        <Body
-          className={cn("max-w-[2000px] border-l border-r", "bg-brand-primary")}
-        >
-          <main>{children}</main>
-        </Body>
-        <Footer className="bg-brand-secondary w-screen" />
-      </div>
-    </>
   );
 }
