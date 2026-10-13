@@ -81,6 +81,7 @@ function StartMonitoringCard({ className }: { className?: string }) {
                   { id: "1h", label: "1 hr", value: "1hr" },
                 ].map(({ id, label, value }) => (
                   <FieldLabel
+                    key={id}
                     htmlFor={id}
                     className="cursor-pointer lg:py-3.5 font-light"
                   >

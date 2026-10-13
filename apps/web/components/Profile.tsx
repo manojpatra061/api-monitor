@@ -17,7 +17,12 @@ interface Props {
 export function Profile({ userInitial, className }: Props) {
   return (
     <>
-      <DropdownMenu>
+      <Avatar className="h-7 w-7 border">
+        <AvatarFallback className="text-xs font-medium">
+          {userInitial}
+        </AvatarFallback>
+      </Avatar>
+      {/* <DropdownMenu>
         <DropdownMenuTrigger className={cn(className)}>
           <Button
             variant={"ghost"}
@@ -40,7 +45,7 @@ export function Profile({ userInitial, className }: Props) {
           <DropdownMenuSeparator />
           <DropdownMenuItem>Sign out</DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </>
   );
 }

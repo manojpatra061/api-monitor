@@ -5,6 +5,7 @@ import { Navbar } from "./Navbar";
 import { Indicator } from "./Indicator";
 import { Notification } from "./Notification";
 import { Profile } from "./Profile";
+import Link from "next/link";
 
 interface Props {
   className?: string;
@@ -78,7 +79,9 @@ function Temp() {
       <div className="ml-auto flex items-center gap-3.5">
         <Indicator runningCount={99} />
         <Notification count={1} />
-        <Profile userInitial="MP" />
+        <Link href={"/profile"}>
+          <Profile userInitial="MP" />
+        </Link>
       </div>
     </>
   );

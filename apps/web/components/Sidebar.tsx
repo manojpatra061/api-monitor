@@ -12,7 +12,7 @@ import {
   SidebarProvider,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Menu, ListChecks, Home, Plus } from "lucide-react";
 import { Branding } from "./Branding";
 import { Profile } from "./Profile";
@@ -58,13 +58,16 @@ export function AppSidebar({ className }: Pick<Props, "className">) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t p-1 bg-brand-primary text-brand-primary-fg">
-        <Button
-          variant="ghost"
-          className="border-t flex gap-2 justify-start cursor-pointer"
+        <Link
+          href={"/profile"}
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "border-t flex gap-2 justify-start cursor-pointer",
+          )}
         >
           <Profile userInitial="MP" />
           <span className="text-base uppercase">Profile</span>
-        </Button>
+        </Link>
       </SidebarFooter>
     </Sidebar>
   );
